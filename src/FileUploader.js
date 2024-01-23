@@ -35,7 +35,7 @@ const FileUploader = ({ onMerge }) => {
      }
 
     console.log('ENV VAR: ', process.env.REACT_APP_API_URL)
-    const link = `${process.env.REACT_APP_API_URL}/merge_excel`
+    const link = `http://192.168.0.111:5000/merge_excel`
     try {
       const response = await axios.post(link, formData, {
         headers: {
