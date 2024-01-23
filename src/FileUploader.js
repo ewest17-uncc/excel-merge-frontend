@@ -34,8 +34,9 @@ const FileUploader = ({ onMerge }) => {
         console.log(pair[0]+ ', '+ pair[1]); 
      }
 
+    console.log('ENV VAR: ', process.env.REACT_APP_API_URL)
     try {
-      const response = await axios.post('http://127.0.0.1:5000/merge_excel', formData, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/merge_excel`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
