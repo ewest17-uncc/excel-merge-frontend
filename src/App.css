@@ -1,38 +1,113 @@
-.App {
+/* App.css */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1 {
+  color: #343a40;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.file-uploader {
+  margin-top: 40px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.file-input-container {
+  margin-bottom: 10px; /* Added spacing between the two containers */
+}
+
+.file-input {
+  display: none; /* Make the text invisible */
+}
+
+.file-label {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.file-label:hover {
+  background-color: #0056b3;
+}
+
+.file-display {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.merge-button-container {
+  margin-top: 20px; /* Added spacing between the two containers */
+}
+
+.merge-button {
+  background-color: #28a745;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.merge-button:hover {
+  background-color: #218838;
+}
+
+.download-link {
+  display: block;
+  margin-top: 20px;
+  text-decoration: none;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.download-link:hover {
+  background-color: #0056b3;
+}
+
+.loading-animation {
+  margin-top: 10px; /* Adjust the margin as needed */
+  font-size: 16px;
+  color: #555; /* Text color */
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
+@keyframes rotate {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
   }
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #ccc; /* Border color */
+  border-top: 3px solid #3498db; /* Top border color (animation color) */
+  border-radius: 50%;
+  animation: rotate 1s linear infinite;
+  margin-right: 5px; /* Adjust the margin as needed */
 }
