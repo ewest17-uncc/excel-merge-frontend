@@ -39,6 +39,7 @@ const FileUploader = ({ onMerge }) => {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/merge_excel`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          'Access-Control-Allow-Origin': '*'
         },
         responseType: 'blob', // Important for receiving binary data
       });
