@@ -7,6 +7,7 @@ const FileUploader = ({ onMerge }) => {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [selectedIndicator, setSelectedIndicator] = useState('');
 
   useEffect(() => {
     console.log('FILES ARE: ', files)
@@ -29,13 +30,16 @@ const FileUploader = ({ onMerge }) => {
         formData.append(`files[${i}]`, files[i]); // Append each file with a unique key
     }
 
+    formData.append('selectedIndicator', selectedIndicator);
+
     console.log('FORM DATA: ')
     for(var pair of formData.entries()) {
         console.log(pair[0]+ ', '+ pair[1]); 
      }
 
     console.log('ENV VAR: ', process.env.REACT_APP_API_URL)
-    const link = `${process.env.REACT_APP_API_URL}:5000/merge_excel`
+    const link = `${process.env.REACT_APP_API_URL}/merge_excel`
+    // const link = `http://127.0.0.1:5001/merge_excel`
     console.log('LINK: ', link)
     try {
       const response = await axios.post(link, formData, {
@@ -77,6 +81,16 @@ const FileUploader = ({ onMerge }) => {
         <div className="file-input-container">
             <label for="file-input" class="file-label">Choose Files</label>
             <input type="file" id="file-input" multiple onChange={handleFileChange} className="file-input" />
+        </div>
+        <div className="indicator-selector">
+            <label htmlFor="indicator-select">Select Indicator:</label>
+            <select id="indicator-select" onChange={(e) => setSelectedIndicator(e.target.value)}>
+            <option value="">-- Select --</option>
+            <option value="Indicator 1">Indicator 1</option>
+            <option value="Indicator 2">Indicator 2</option>
+            <option value="Indicator 3">Indicator 3</option>
+            <option value="Indicator 4">Indicator 4</option>
+            </select>
         </div>
         <span className="file-display">
             {files.length > 0 ? `${files.length} file${files.length > 1 ? 's' : ''} selected` : 'No files selected'}

@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  excel-merge-frontend:
+    container_name: excel-merge-frontend
+    image: excel-merge-frontend
+    build: ./
+    volumes:
+      - ./src:/app/src
+    env_file:
+    - .env
+    ports:
+      - 3000:3000
