@@ -1,2 +1,0 @@
-docker image build -t react_docker .
-docker run -p 3000:3000 -e REACT_APP_API_URL=http://75.190.208.39 -d react_docker 
