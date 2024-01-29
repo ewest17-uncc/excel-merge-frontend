@@ -56,10 +56,14 @@ const FileUploader = ({ onMerge }) => {
       // Create a blob from the response data
       const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
+      const contentDisposition = response.headers['content-disposition'];
+      const fileNameMatch = contentDisposition && contentDisposition.match(/filename=([^;]+)/);
+      const fileName = fileNameMatch ? fileNameMatch[1] : 'merged_output.xlsx';
+
       // Create a download link and trigger the download
       const downloadLink = document.createElement('a');
       downloadLink.href = window.URL.createObjectURL(blob);
-      downloadLink.download = 'merged_output.xlsx';
+      downloadLink.download = fileName;
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);
