@@ -8,6 +8,7 @@ const FileUploader = ({ onMerge }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [selectedIndicator, setSelectedIndicator] = useState('');
+  const [VPR, setVPR] = useState('');
 
   useEffect(() => {
     console.log('FILES ARE: ', files)
@@ -31,6 +32,7 @@ const FileUploader = ({ onMerge }) => {
     }
 
     formData.append('selectedIndicator', selectedIndicator);
+    formData.append('VPR', VPR);
 
     console.log('FORM DATA: ')
     for(var pair of formData.entries()) {
@@ -83,7 +85,7 @@ const FileUploader = ({ onMerge }) => {
 
     <div className="file-uploader">
         <div className="file-input-container">
-            <label for="file-input" class="file-label">Choose Files</label>
+            <label htmlFor="file-input" className="file-label">Choose Files</label>
             <input type="file" id="file-input" multiple onChange={handleFileChange} className="file-input" />
         </div>
         <span className="file-display">
@@ -99,6 +101,12 @@ const FileUploader = ({ onMerge }) => {
             <option value="МПТ Прекурсор">МПТ Прекурсор</option>
             <option value="Яд, маловероятно">Яд, маловероятно</option>
             </select>
+        </div>
+        <br></br>
+        <div className="vpr-selector">
+            <label htmlFor="vpr-select">Write ВПР:</label>
+            <input id="vpr-select" onChange={(e) => setVPR(e.target.value)}>
+            </input>
         </div>
         <br></br>
         {loading ? (
