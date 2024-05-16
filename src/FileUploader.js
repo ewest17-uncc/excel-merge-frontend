@@ -1,11 +1,13 @@
 // FileUploader.js
 import React, { useState, useEffect } from 'react';
+import Switch from '@mui/material/Switch';
 import axios from 'axios';
 import './App.css'
 
 const FileUploader = ({ onMerge }) => {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [merge, setMerge] = useState(true);
   const [error, setError] = useState(false);
   const [selectedIndicator, setSelectedIndicator] = useState('');
   const [VPR, setVPR] = useState('');
@@ -16,6 +18,10 @@ const FileUploader = ({ onMerge }) => {
 
   const handleFileChange = (e) => {
     setFiles(e.target.files);
+  };
+
+  const toggleMerge = () => {
+    setMerge(!merge);
   };
 
   const handleMerge = async () => {
@@ -40,8 +46,7 @@ const FileUploader = ({ onMerge }) => {
      }
 
     console.log('ENV VAR: ', process.env.REACT_APP_API_URL)
-    const link = `${process.env.REACT_APP_API_URL}/merge_excel`
-    // const link = `http://127.0.0.1:5001/merge_excel`
+    const link = merge ? `${process.env.REACT_APP_API_URL}/merge_excel` : `${process.env.REACT_APP_API_URL}/process_excel`
     console.log('LINK: ', link)
     try {
       const response = await axios.post(link, formData, {
@@ -56,11 +61,17 @@ const FileUploader = ({ onMerge }) => {
       console.log('RESPONSE Status: ', response.status);
 
       // Create a blob from the response data
-      const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const blob = merge 
+      ? 
+        new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }) 
+      :
+        new Blob([response.data], { type: 'application/zip' });
 
-      const contentDisposition = response.headers['content-disposition'];
-      const fileNameMatch = contentDisposition && contentDisposition.match(/filename=([^;]+)/);
-      const fileName = fileNameMatch ? fileNameMatch[1] : 'merged_output.xlsx';
+        const contentDisposition = response.headers['content-disposition'];
+        const fileNameMatch = contentDisposition && contentDisposition.match(/filename=([^;]+)/);
+        const fileName = fileNameMatch ? fileNameMatch[1] : 'output.xlsx';
+
+
 
       // Create a download link and trigger the download
       const downloadLink = document.createElement('a');
@@ -108,6 +119,13 @@ const FileUploader = ({ onMerge }) => {
             <input id="vpr-select" onChange={(e) => setVPR(e.target.value)}>
             </input>
         </div>
+        <label className="slider-label">Merge?</label>
+        <Switch
+            checked={merge}
+            onChange={toggleMerge}
+            inputProps={{ 'aria-label': 'controlled' }}
+        />
+        {console.log('MERGE STATE: ', merge)}
         <br></br>
         {loading ? (
         <div className="loading-animation">
